@@ -13,12 +13,12 @@ class SessionsController < ApplicationController
     else
       # エラーメッセージを作成する
       flash.now[:danger] = 'メールアドレスまたはパスワードが正しくありません。'
-      render 'new', status: :unprocessable_entity
+      render 'new'
     end
   end
 
   def destroy
-    log_out
-    redirect_to root_url, status: :see_other
+    log_out if logged_in?
+    redirect_to root_url
   end
 end
