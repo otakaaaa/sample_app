@@ -15,8 +15,12 @@ class InvalidPasswordTest < UsersLogin
   end
 
   test "login with valid email/invalid password" do
-    post login_path, params: { session: { email:    @user.email,
-                                          password: "invalid" } }
+    post login_path, params: {
+      session: {
+        email:    @user.email,
+        password: "invalid"
+      }
+    }
     assert_not is_logged_in?
     assert_template 'sessions/new'
     assert_not flash.empty?
@@ -29,8 +33,12 @@ class ValidLogin < UsersLogin
 
   def setup
     super
-    post login_path, params: { session: { email:    @user.email,
-                                          password: 'password' } }
+    post login_path, params: {
+      session: {
+        email:    @user.email,
+        password: 'password' 
+      }
+    }
   end
 end
 

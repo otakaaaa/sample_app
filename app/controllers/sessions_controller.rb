@@ -3,11 +3,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
-    if user&.authenticate(params[:session][:password])
+    @user = User.find_by(email: params[:session][:email].downcase)
+    if @user && @user.authenticate(params[:session][:password])
+      forwarding_url = session[:forwarding_url]
       reset_session
-      log_in user
-      redirect_to user
+      params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
+      log_in @user
+      redirect_to forwarding_url || @user
     else
       # エラーメッセージを作成する
       flash.now[:danger] = 'メールアドレスまたはパスワードが正しくありません。'
