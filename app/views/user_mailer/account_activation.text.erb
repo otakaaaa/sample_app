@@ -1,0 +1,7 @@
+こんにちは <%= @user.name %>
+
+Sample Appへようこそ!
+リンクをクリックしてアカウントを有効化してください。
+
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
