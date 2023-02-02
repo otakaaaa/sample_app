@@ -12,10 +12,11 @@ class SessionsController < ApplicationController
         log_in user
         redirect_to forwarding_url || user
       else
-        message = "アカウントが有効化されておりません。"
-        message += "有効化するにはメールをご確認ください。"
+        message = "アカウントが有効でありません。"
+        message += "有効化するにはメールをご確認ください。" 
         flash[:warning] = message
         redirect_to root_url
+      end
     else
       # エラーメッセージを作成する
       flash.now[:danger] = 'メールアドレスまたはパスワードが正しくありません。'
