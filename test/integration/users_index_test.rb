@@ -48,7 +48,7 @@ class UsersIndexAdminTest < UsersIndexAdmin
     User.paginate(page: 1).first.toggle!(:activated)
     get users_path
     assigns(:users).each do |user|
-      assert.user.activated?
+      assert user.activated, true
     end
   end
 end

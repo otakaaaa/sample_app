@@ -7,13 +7,13 @@ class UserMailerTest < ActionMailer::TestCase
     mail = UserMailer.account_activation(user)
     assert_equal "Account activation", mail.subject
     assert_equal [user.email], mail.to
-    assert_equal ["user@realdomain.com"], mail.from
+    assert_equal ["sotaka3104@gmail.com"], mail.from
     # assert_match user.name,               mail.body.encoded
     # assert_match user.activation_token,   mail.body.encoded
     # assert_match CGI.escape(user.email),  mail.body.encoded
     # user.nameが本文に含まれている
     assert_match user.name,              mail.text_part.body.encoded
-    assert_match user.name,               mail.html_part.body.encoded
+    assert_match user.name,              mail.html_part.body.encoded
     # user.activation_tokenが本文に含まれている
     assert_match user.activation_token,   mail.text_part.body.encoded
     assert_match user.activation_token,   mail.html_part.body.encoded
@@ -23,11 +23,18 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   test "password_reset" do
-    mail = UserMailer.password_reset
+    user = users(:michael)
+    user.reset_token = User.new_token
+    mail = UserMailer.password_reset(user)
     assert_equal "Password reset", mail.subject
-    assert_equal ["to@example.org"], mail.to
-    assert_equal ["user@realdomain.com"], mail.from
-    assert_match "", mail.body.encoded
+    assert_equal [user.email], mail.to
+    assert_equal ["sotaka3104@gmail.com"], mail.from
+    # assert_match user.reset_token, mail.body.encoded
+    # assert_match CGI.escape(user.email), mail.body.encoded
+    assert_match user.reset_token,        mail.text_part.body.encoded
+    assert_match user.reset_token,   mail.html_part.body.encoded
+    assert_match CGI.escape(user.email),  mail.text_part.body.encoded
+    assert_match CGI.escape(user.email),  mail.html_part.body.encoded
   end
 
 end
