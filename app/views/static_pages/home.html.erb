@@ -1,13 +1,5 @@
-<div class="center jumbotron">
-    <h1>Topページ</h1>
-
-    <h2>
-        This is the home page for the
-        <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
-        sample application.
-    </h2>
-
-<%= link_to "ログインする", login_path, class: "btn btn-lg btn-primary" %>
-</div>
-
-<%= link_to image_tag("kitten.jpg", alt: "ネコちゃん", width: "30%"), "https://rubyonrails.org/" %>
+<% if logged_in? %>
+    <%= render 'shared/home_login' %>
+<% else %>
+    <%= render 'shared/home_not_login' %>
+<% end %>
