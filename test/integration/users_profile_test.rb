@@ -10,6 +10,7 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
   test "profile display" do
     get user_path(@user)
     assert_template 'users/show'
+    assert_template 'shared/_stats'
     assert_select 'title', full_title(@user.name)
     assert_select 'h1', text: @user.name
     assert_select 'h1>img.gravatar'
@@ -18,5 +19,6 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     @user.microposts.paginate(page:1).each do |micropost|
       assert_match micropost.content, response.body
     end
+    assert_match @user.active_relationships.count.to_s, response.body
   end
 end
